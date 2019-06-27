@@ -4,7 +4,9 @@ TODO		+= cipher
 
 IDIR		+= ./ ../include
 
+DEFS		+= CONFIG_DEBUG
 CFLAGS		+= $(addprefix -I, $(IDIR))
+CFLAGS		+= $(addprefix -D, $(DEFS))
 
 LIBS		:= crypto
 LDIR		:= $(TOPDIR)/libs
