@@ -13,5 +13,5 @@ int file_b_fifo(int fd, int type)
 		return -1;
 	}
 
-	return stat.st_mode & S_IFIFO;
+	return stat.st_mode & type;
 }
