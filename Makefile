@@ -9,7 +9,8 @@ LD		:= $(CROSS_COMPILE)ld
 TOOLS_DIR	:= $(TOPDIR)/tools
 
 export TOPDIR CC STRIP AR LD TOOLS_DIR
-obj-y		= utils/
+obj-y		+= utils/
+obj-y		+= utils/bio/
 
 PHONY   := all
 all:
