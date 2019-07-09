@@ -50,6 +50,5 @@ endef
 quiet_cmd_link_exec_target = "   LD     $@"
 define cmd_link_exec_target
    @$(CC) -o $@ $^ $(LDFLAGS)
-   @$(STRIP) $@
    @echo $(quiet_cmd_link_exec_target)
 endef

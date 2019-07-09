@@ -1,12 +1,13 @@
 sinclude $(TOPDIR)/rules.mk
 
-TODO		+= cipher
+TODO		+= cipher digest cert bio
 
-IDIR		+= ./ ../include
+IDIR		+= ./ ../include 
 
 DEFS		+= CONFIG_DEBUG
 CFLAGS		+= $(addprefix -I, $(IDIR))
 CFLAGS		+= $(addprefix -D, $(DEFS))
+CFLAGS		+= -g3
 
 LIBS		:= crypto
 LDIR		:= $(TOPDIR)/libs
@@ -22,6 +23,12 @@ TOOLS_OBJ	+= $(patsubst %.c, %.o, $(TOOLS_SOUREC))
 all: $(TODO)
 
 cipher: cipher.o $(TOOLS_OBJ)
+	$(call cmd_link_exec_target)
+digest: digest.o $(TOOLS_OBJ)
+	$(call cmd_link_exec_target)
+cert: cert.o $(TOOLS_OBJ)
+	$(call cmd_link_exec_target)
+bio: bio_test.o $(TOOLS_OBJ)
 	$(call cmd_link_exec_target)
 clean:
 	@$(RM) $(TODO) *.o $(TOOLS_DIR)/*.o

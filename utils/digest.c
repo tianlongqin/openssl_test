@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <openssl/evp.h>
-#include <debug.h>
+#include <tools/debug.h>
 
 int main(int argc, const char *argv[])
 {

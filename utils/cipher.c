@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <string.h>
-#include <debug.h>
+#include <tools/debug.h>
 #include <openssl/evp.h>
 
 static unsigned char key[] = {
