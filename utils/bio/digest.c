@@ -18,8 +18,8 @@ static struct args args;
 void digest(int argc, char *argv[])
 {
 	parse_args(argc, argv);
-	if(args.crypt.digest)
-		args.crypt.digest(&args);
+	if(args.crypto.digest)
+		args.crypto.digest(&args);
 	else
 		printf("not find diest functions");
 }
@@ -35,7 +35,7 @@ static void digest_in_file(void *args)
 	BIO_E_NULL(b_file, BIO_new_file(a->in_file, "r"));
 	BIO_E_NULL(b_md, BIO_new(BIO_f_md()));
 
-	switch (a->type) {
+	switch (a->algo) {
 	case EVP_MD5:
 		BIO_set_md(b_md, EVP_md5());
 		break;
@@ -77,7 +77,7 @@ static void digest_stdin(void *args)
 	BIO_set_fd(b_in, 0, BIO_NOCLOSE);
 	BIO_E_NULL(b_md, BIO_new(BIO_f_md()));
 
-	switch (a->type) {
+	switch (a->algo) {
 	case EVP_MD5:
 		BIO_set_md(b_md, EVP_md5());
 		break;
@@ -109,7 +109,7 @@ static const struct option long_options[] = {
 
 	{"in", 1, NULL, 'i'},
 	{"out", 1, NULL, 'o'},
-	{"type", 1, NULL, 't'},
+	{"algo", 1, NULL, 'g'},
 	{NULL, 0, 0, 0},
 };
 
@@ -118,7 +118,7 @@ static void parse_args(int argc, char *argv[])
 	int c;
 
 	do {
-		c = getopt_long(argc, argv, "vhi:o:t:", long_options, NULL);
+		c = getopt_long(argc, argv, "vhi:o:g:", long_options, NULL);
 		if (c == -1)
 			break;
 
@@ -137,15 +137,15 @@ static void parse_args(int argc, char *argv[])
 			args.out_file = optarg;
 			break;
 
-		case 't':
+		case 'g':
 			if (strstr(optarg, "md5"))
-				args.type = EVP_MD5;
+				args.algo = EVP_MD5;
 			else if (strstr(optarg, "sha1"))
-				args.type = EVP_SHA1;
+				args.algo = EVP_SHA1;
 			else if (strstr(optarg, "sha256"))
-				args.type = EVP_SHA256;
+				args.algo = EVP_SHA256;
 			else if (strstr(optarg, "sm3"))
-				args.type = EVP_SM3;
+				args.algo = EVP_SM3;
 			break;
 		default:
 			printf(help);
@@ -155,8 +155,8 @@ static void parse_args(int argc, char *argv[])
 	} while (1);
 
 	if (args.in_file)
-		args.crypt.digest = digest_in_file;
+		args.crypto.digest = digest_in_file;
 	else
-		args.crypt.digest = digest_stdin;
+		args.crypto.digest = digest_stdin;
 }
 

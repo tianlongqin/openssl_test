@@ -8,6 +8,7 @@
 #include <openssl/bio.h>
 #include <base.h>
 #include <digest.h>
+#include <cipher.h>
 static const struct option long_options[] = {
 	{"version", 0, NULL, 'v'},
 	{"help", 0, NULL, 'h'},
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
 	if (!strcmp(argv[1], "digest")) {
 		digest(argc, argv);
 	} else if (!strcmp(argv[1], "cipher")){
-
+		cipher(argc, argv);
 	} else {
 		parse_args(argc, argv);
 	}
